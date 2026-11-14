@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Crossword" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">#0E7C5B</item>
+        <item name="colorPrimaryDark">#0A5C44</item>
+        <item name="colorAccent">#F2B705</item>
+    </style>
+</resources>

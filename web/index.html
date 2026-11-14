@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>الكلمات المتقاطعة العربية</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- شاشة الافتتاح -->
+  <section id="screen-splash" class="screen active">
+    <div class="splash-box">
+      <div class="logo">✦</div>
+      <h1 class="splash-title">الكلمات المتقاطعة</h1>
+      <p class="splash-sub">العربية</p>
+      <p class="splash-tag">٢٤ لغزاً • ١٣٦ كلمة • تحدٍّ يومي</p>
+      <div class="splash-loader"><span></span></div>
+      <p class="splash-credit">تطوير وبرمجة: HessamX 2026</p>
+    </div>
+  </section>
+
+  <!-- الرئيسية -->
+  <section id="screen-home" class="screen">
+    <header class="topbar">
+      <div class="brand">✦ الكلمات المتقاطعة</div>
+      <div class="coins-pill" id="coins-home">🪙 <span id="coins-value">100</span></div>
+    </header>
+    <div class="home-hero">
+      <h2>أهلاً بك في عالم الكلمات</h2>
+      <p>اختر لغزاً، واملأ الشبكة حرفاً حرفاً، واجمع العملات والنجوم.</p>
+      <button class="btn btn-primary btn-big" id="btn-play">▶ العب الآن</button>
+      <div class="home-progress">
+        <span id="home-progress-text">0 / 24 لغزاً مكتملاً</span>
+        <div class="progress-bar"><span id="home-progress-fill"></span></div>
+      </div>
+    </div>
+    <div class="home-grid">
+      <button class="card-btn" data-go="levels">🎯<span>المستويات</span><small>4 مستويات • 24 لغزاً</small></button>
+      <button class="card-btn" data-go="categories">🗂️<span>التصنيفات</span><small>10 تصنيفات</small></button>
+      <button class="card-btn" data-go="daily">📅<span>التحدي اليومي</span><small id="daily-status">لغز اليوم بانتظارك</small></button>
+      <button class="card-btn" data-go="reward">🎁<span>المكافأة اليومية</span><small id="reward-status">+50 عملة كل يوم</small></button>
+      <button class="card-btn" data-go="achievements">🏆<span>الإنجازات</span><small id="ach-count">0 / 8 شارات</small></button>
+      <button class="card-btn" data-go="stats">📊<span>الإحصائيات</span><small>تقدّمك وأرقامك</small></button>
+      <button class="card-btn" data-go="settings">⚙️<span>الإعدادات</span><small>المظهر والصوت</small></button>
+      <button class="card-btn" data-go="about">ℹ️<span>المعلومات</span><small>عن اللعبة</small></button>
+    </div>
+    <p class="foot-credit">حسام إكس © 2026</p>
+  </section>
+
+  <!-- المستويات -->
+  <section id="screen-levels" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>المستويات</h2><span></span></header>
+    <div id="levels-list" class="list"></div>
+  </section>
+
+  <!-- ألغاز مستوى -->
+  <section id="screen-level-puzzles" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="levels">‹ رجوع</button><h2 id="level-puzzles-title">الألغاز</h2><span></span></header>
+    <div id="level-puzzles-list" class="list"></div>
+  </section>
+
+  <!-- التصنيفات -->
+  <section id="screen-categories" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>التصنيفات</h2><span></span></header>
+    <div id="categories-list" class="list"></div>
+  </section>
+
+  <!-- ألغاز تصنيف -->
+  <section id="screen-category-puzzles" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="categories">‹ رجوع</button><h2 id="category-puzzles-title">الألغاز</h2><span></span></header>
+    <div id="category-puzzles-list" class="list"></div>
+  </section>
+
+  <!-- اللعب -->
+  <section id="screen-play" class="screen">
+    <header class="topbar">
+      <button class="btn btn-ghost" id="btn-exit-play">‹ خروج</button>
+      <h2 id="play-title">اللغز</h2>
+      <button class="btn btn-ghost" id="btn-pause">⏸ إيقاف</button>
+    </header>
+    <div class="play-meta">
+      <span id="play-timer">⏱ 00:00</span>
+      <span id="play-progress">0 / 0 كلمة</span>
+      <span class="coins-pill">🪙 <span id="coins-play">100</span></span>
+    </div>
+    <div id="extra-hint-box" class="extra-hint hidden"></div>
+    <div id="grid" class="grid" role="grid" aria-label="شبكة الكلمات المتقاطعة"></div>
+    <div class="current-clue" id="current-clue">اختر خلية لبدء اللعب</div>
+    <div class="hints-row">
+      <button class="hint-btn" id="hint-extra">💡 معنى إضافي <b>5 🪙</b></button>
+      <button class="hint-btn" id="hint-letter">🔤 كشف حرف <b>10 🪙</b></button>
+      <button class="hint-btn" id="hint-clear">🧹 حذف الخاطئة <b>15 🪙</b></button>
+      <button class="hint-btn" id="hint-solve">✅ حل الكلمة <b>30 🪙</b></button>
+    </div>
+    <div class="play-actions">
+      <button class="btn btn-secondary" id="btn-check">✔ تحقق</button>
+      <button class="btn btn-secondary" id="btn-clear-word">✕ مسح الكلمة</button>
+    </div>
+    <div id="keyboard" class="keyboard"></div>
+    <div class="clues">
+      <div class="clues-col"><h3>أفقي</h3><ul id="clues-h"></ul></div>
+      <div class="clues-col"><h3>عمودي</h3><ul id="clues-v"></ul></div>
+    </div>
+    <div id="pause-overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <h3>⏸ اللعبة متوقفة</h3>
+        <p>تم حفظ تقدّمك تلقائياً.</p>
+        <button class="btn btn-primary" id="btn-resume">▶ استئناف</button>
+        <button class="btn btn-ghost" id="btn-quit-pause">خروج للرئيسية</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- الفوز -->
+  <section id="screen-win" class="screen">
+    <div class="win-box">
+      <div class="win-emoji">🎉</div>
+      <h2>أحسنت! أكملت اللغز</h2>
+      <div id="win-stars" class="stars">★★★</div>
+      <p id="win-detail"></p>
+      <p id="win-coins" class="win-coins"></p>
+      <div class="win-actions">
+        <button class="btn btn-primary" id="btn-next-puzzle">اللغز التالي ›</button>
+        <button class="btn btn-secondary" id="btn-replay">↻ إعادة اللعب</button>
+        <button class="btn btn-ghost" id="btn-win-home">الرئيسية</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- الإنجازات -->
+  <section id="screen-achievements" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>الإنجازات</h2><span></span></header>
+    <div id="achievements-list" class="list"></div>
+  </section>
+
+  <!-- الإحصائيات -->
+  <section id="screen-stats" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>الإحصائيات</h2><span></span></header>
+    <div id="stats-list" class="list"></div>
+  </section>
+
+  <!-- الإعدادات -->
+  <section id="screen-settings" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>الإعدادات</h2><span></span></header>
+    <div class="settings-box">
+      <label class="setting-row"><span>المظهر</span>
+        <select id="set-theme">
+          <option value="auto">تلقائي</option>
+          <option value="light">نهاري ☀️</option>
+          <option value="dark">ليلي 🌙</option>
+        </select>
+      </label>
+      <label class="setting-row"><span>الصوت</span><input type="checkbox" id="set-sound"></label>
+      <label class="setting-row"><span>الاهتزاز</span><input type="checkbox" id="set-vibrate"></label>
+      <label class="setting-row"><span>التحقق الفوري أثناء الكتابة</span><input type="checkbox" id="set-instant"></label>
+      <button class="btn btn-danger" id="btn-reset">🗑 إعادة تعيين كل التقدم</button>
+      <p class="setting-note">إعادة التعيين تحذف العملات والألغاز المكتملة والإنجازات نهائياً.</p>
+    </div>
+  </section>
+
+  <!-- المعلومات -->
+  <section id="screen-about" class="screen">
+    <header class="topbar"><button class="btn btn-ghost" data-go="home">‹ رجوع</button><h2>المعلومات</h2><span></span></header>
+    <div class="about-box">
+      <div class="logo small">✦</div>
+      <h3>الكلمات المتقاطعة العربية</h3>
+      <p>لعبة كلمات متقاطعة عربية كاملة تعمل دون إنترنت: 24 لغزاً في 4 مستويات و10 تصنيفات، مع تحدٍّ يومي ومكافأة يومية ومساعدات وعملات وإنجازات وإحصائيات.</p>
+      <p>املأ الشبكة بالحروف الصحيحة من التلميحات، واجمع النجوم والعملات، وأكمل كل الألغاز.</p>
+      <p class="about-credit">تطوير وبرمجة: HessamX 2026</p>
+      <p class="about-credit">حسام إكس © 2026</p>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

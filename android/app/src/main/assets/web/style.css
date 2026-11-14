@@ -1,0 +1,139 @@
+/* الكلمات المتقاطعة العربية — تصميم عصري متجاوب، وضع ليلي/نهاري */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f1ea; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
+  --primary:#0d9488; --primary-dark:#0f766e; --accent:#f59e0b;
+  --line:#e5e7eb; --cell:#ffffff; --cell-word:#d1fae5; --cell-sel:#fde68a;
+  --cell-done:#a7f3d0; --cell-wrong:#fecaca; --cell-black:#1f2937;
+  --shadow:0 4px 16px rgba(0,0,0,.08);
+}
+body.dark{
+  --bg:#111827; --card:#1f2937; --ink:#f3f4f6; --muted:#9ca3af;
+  --primary:#14b8a6; --primary-dark:#0d9488; --accent:#fbbf24;
+  --line:#374151; --cell:#374151; --cell-word:#065f46; --cell-sel:#92400e;
+  --cell-done:#047857; --cell-wrong:#7f1d1d; --cell-black:#030712;
+  --shadow:0 4px 16px rgba(0,0,0,.4);
+}
+html,body{height:100%}
+body{
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.6;
+  -webkit-tap-highlight-color:transparent;
+}
+#app{max-width:640px;margin:0 auto;min-height:100vh;padding:0 12px 32px}
+.screen{display:none;animation:fade .25s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hidden{display:none!important}
+
+/* أزرار عامة */
+.btn{border:none;border-radius:12px;padding:10px 16px;font-size:16px;font-family:inherit;cursor:pointer;background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-primary:active{background:var(--primary-dark)}
+.btn-secondary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-danger{background:#dc2626;color:#fff;border-color:#dc2626;width:100%;margin-top:16px}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--primary);font-weight:700}
+.btn-big{width:100%;font-size:20px;padding:14px;margin:14px 0}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* الشاشة الافتتاحية */
+#screen-splash{display:none}
+#screen-splash.active{display:flex;align-items:center;justify-content:center;min-height:90vh}
+.splash-box{text-align:center}
+.logo{font-size:72px;color:var(--primary);line-height:1}
+.logo.small{font-size:48px}
+.splash-title{font-size:34px;margin-top:8px}
+.splash-sub{font-size:22px;color:var(--accent);font-weight:700}
+.splash-tag{color:var(--muted);margin-top:8px}
+.splash-loader{width:120px;height:6px;background:var(--line);border-radius:3px;margin:24px auto;overflow:hidden}
+.splash-loader span{display:block;height:100%;width:40%;background:var(--primary);border-radius:3px;animation:load 1s infinite alternate}
+@keyframes load{from{margin-right:0}to{margin-right:60%}}
+.splash-credit{color:var(--muted);font-size:14px;margin-top:16px}
+
+/* الرئيسية */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 2px}
+.topbar h2{font-size:20px;flex:1;text-align:center}
+.brand{font-weight:800;font-size:18px;color:var(--primary)}
+.coins-pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;box-shadow:var(--shadow)}
+.home-hero{background:linear-gradient(135deg,var(--primary),#0ea5e9);color:#fff;border-radius:18px;padding:22px 18px;box-shadow:var(--shadow)}
+.home-hero h2{font-size:22px}
+.home-hero p{opacity:.95;margin-top:4px}
+.home-hero .btn-big{background:#fff;color:var(--primary-dark);font-weight:800}
+.home-progress{margin-top:6px;font-size:14px}
+.progress-bar{height:8px;background:rgba(255,255,255,.35);border-radius:4px;margin-top:6px;overflow:hidden}
+.progress-bar span{display:block;height:100%;background:#fde047;border-radius:4px;transition:width .3s}
+.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card-btn{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 10px;font-size:26px;cursor:pointer;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:2px;font-family:inherit;color:var(--ink)}
+.card-btn span{font-size:17px;font-weight:800}
+.card-btn small{font-size:12px;color:var(--muted)}
+.foot-credit{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
+
+/* القوائم */
+.list{display:flex;flex-direction:column;gap:10px}
+.list-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:var(--shadow);cursor:pointer;font-family:inherit;color:var(--ink);text-align:right;width:100%;font-size:16px}
+.list-item.locked{opacity:.55;cursor:not-allowed}
+.list-item .meta{color:var(--muted);font-size:13px}
+.list-item .stars{color:var(--accent);font-size:18px;letter-spacing:2px}
+.badge{background:var(--primary);color:#fff;border-radius:999px;padding:2px 10px;font-size:12px}
+.badge.lock{background:#9ca3af}
+
+/* اللعب */
+.play-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;background:var(--line);border:2px solid var(--line);border-radius:10px;padding:3px;max-width:480px;margin:0 auto;direction:ltr}
+.cell{aspect-ratio:1;background:var(--cell);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:clamp(16px,5.4vw,24px);font-weight:800;position:relative;cursor:pointer;user-select:none}
+.cell.black{background:var(--cell-black);cursor:default}
+.cell .num{position:absolute;top:1px;left:3px;font-size:9px;color:var(--muted);font-weight:700;line-height:1}
+.cell.in-word{background:var(--cell-word)}
+.cell.selected{background:var(--cell-sel)}
+.cell.done{background:var(--cell-done)}
+.cell.wrong{background:var(--cell-wrong)}
+.current-clue{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:12px auto;max-width:480px;font-weight:700}
+.extra-hint{background:#fef3c7;color:#92400e;border:1px solid #fde68a;border-radius:12px;padding:10px 12px;margin:0 auto 10px;max-width:480px}
+body.dark .extra-hint{background:#451a03;color:#fde68a;border-color:#92400e}
+.hints-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-width:480px;margin:0 auto}
+.hint-btn{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 6px;font-family:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+.hint-btn b{color:var(--accent)}
+.play-actions{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.keyboard{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;max-width:480px;margin:0 auto}
+.key{background:var(--card);border:1px solid var(--line);border-bottom:3px solid var(--line);border-radius:10px;padding:10px 0;font-size:20px;font-weight:800;font-family:inherit;color:var(--ink);cursor:pointer}
+.key:active{background:var(--cell-word)}
+.key-wide{grid-column:span 2;font-size:16px;color:#dc2626}
+.clues{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.clues-col h3{margin-bottom:6px;color:var(--primary)}
+.clues-col ul{list-style:none}
+.clues-col li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:6px;cursor:pointer;font-size:14px}
+.clues-col li.active{border-color:var(--primary);background:var(--cell-word);font-weight:700}
+.clues-col li.done{opacity:.55;text-decoration:line-through}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.overlay-box{background:var(--card);border-radius:18px;padding:28px 22px;text-align:center;max-width:360px;width:100%;display:flex;flex-direction:column;gap:12px}
+
+/* الفوز */
+.win-box{text-align:center;padding:40px 12px}
+.win-emoji{font-size:64px}
+.win-box h2{font-size:24px;margin:8px 0}
+.stars{font-size:44px;color:var(--accent);letter-spacing:6px}
+.stars .off{color:var(--line)}
+.win-coins{font-size:20px;font-weight:800;color:var(--primary)}
+.win-actions{display:flex;flex-direction:column;gap:10px;max-width:320px;margin:20px auto 0}
+
+/* إنجازات / إحصائيات / إعدادات / معلومات */
+.ach-icon{font-size:28px}
+.stat-row,.setting-row{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+.stat-row b{font-size:18px}
+.settings-box{display:flex;flex-direction:column;gap:10px}
+.setting-row input[type=checkbox]{width:22px;height:22px;accent-color:var(--primary)}
+.setting-row select{padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit}
+.setting-note{color:var(--muted);font-size:13px;text-align:center}
+.about-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 18px;text-align:center;box-shadow:var(--shadow)}
+.about-box p{margin-top:10px}
+.about-credit{font-weight:800;color:var(--primary)}
+
+/* تنبيه */
+.toast{position:fixed;bottom:24px;right:50%;transform:translateX(50%);background:#111827;color:#fff;padding:12px 20px;border-radius:999px;z-index:99;box-shadow:var(--shadow);max-width:90vw;text-align:center;font-weight:700}
+body.dark .toast{background:#f3f4f6;color:#111827}
+
+@media (max-width:420px){
+  .clues{grid-template-columns:1fr}
+  .keyboard{grid-template-columns:repeat(6,1fr)}
+  .splash-title{font-size:28px}
+}

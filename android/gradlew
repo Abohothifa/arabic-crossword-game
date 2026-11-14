@@ -1,0 +1,19 @@
+#!/bin/sh
+# Minimal Gradle wrapper launcher for this project.
+# Uses a system Gradle if present, otherwise downloads Gradle 8.7.
+set -e
+GRADLE_VERSION=8.7
+if command -v gradle >/dev/null 2>&1; then
+  exec gradle "$@"
+fi
+DIST_DIR="${GRADLE_USER_HOME:-$HOME/.gradle}/wrapper/dists/gradle-${GRADLE_VERSION}-bin"
+if [ ! -x "$DIST_DIR/gradle-${GRADLE_VERSION}/bin/gradle" ]; then
+  mkdir -p "$DIST_DIR"
+  TMP_ZIP="$DIST_DIR/gradle-${GRADLE_VERSION}-bin.zip"
+  if [ ! -f "$TMP_ZIP" ]; then
+    echo "Downloading Gradle ${GRADLE_VERSION}..."
+    curl -L -o "$TMP_ZIP" "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip"
+  fi
+  (cd "$DIST_DIR" && unzip -o -q "gradle-${GRADLE_VERSION}-bin.zip")
+fi
+exec "$DIST_DIR/gradle-${GRADLE_VERSION}/bin/gradle" "$@"
